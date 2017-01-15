@@ -7,7 +7,6 @@ class array():
         for i in range(length):
             self.numbers_list.append(random.randrange(1, 10))
     def numbers_adder(self):
-        threshold = len(self.numbers_list)
         for x in self.numbers_list:
             self.formula = self.sum - x
             if self.formula in self.numbers_list and self.numbers_list.index(self.formula) != self.numbers_list.index(x) or x == self.sum//2:
