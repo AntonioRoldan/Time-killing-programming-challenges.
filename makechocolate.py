@@ -43,7 +43,7 @@ def make_chocolate(small_amount, big_amount, goal):
             elif small_sum > goal: # If the sum has exceeded our goal
                 return goal #Since the size is one, we can return goal as the result
         elif big_sum >= goal:
-            make_chocolate(small_amount, big_amount -1, goal) # We adjust the amounts by - 1, to check for different combinations
+            return make_chocolate(small_amount, big_amount -1, goal) # We adjust the amounts by - 1, to check for different combinations
         elif big_sum == 5:
             new_threshold_value = goal - big_sum # We adjust the new threshold value for the permutations function
             small_sums_list = permutations(small_amount, small_size, new_threshold_value) #Get all possible sums with our given small values
