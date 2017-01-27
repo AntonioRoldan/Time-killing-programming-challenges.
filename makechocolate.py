@@ -8,7 +8,7 @@ def permutations(amount, size, threshold):
   if combinations[-1] == threshold:
       return combinations[-1]
   elif combinations[-1] > threshold:
-      return combinations[-2]
+      return combinations[-1] - threshold
   else:
       return combinations
 
