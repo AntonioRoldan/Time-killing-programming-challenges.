@@ -1,6 +1,7 @@
 def permutations(amount, size, threshold):
+  "Given the amount and size, it stores all possible sums of the values in a list"
   if amount == 1:
-      return size
+      return size #If there's only one chocolate bar
   combinations = []
   for i in range(1, amount + 1):
     combinations.append(size * i)
@@ -32,7 +33,7 @@ def make_chocolate(small_amount, big_amount, goal):
                 if type(small_sums_list) == list: # If the sum of small bars has not exceeded the threshold value
                     return -1
                 elif small_sum == new_threshold_value:
-                    return small_sum # Whichever value we choose will be correct
+                    return small_sum # Whichever value we choose will be correct (either small sum or new_threshold_value)
                 elif small_sum > new_threshold_value:
                     return new_threshold_value # It is the number of small bars we have left before our goal that matters
             elif small_sum == goal:
