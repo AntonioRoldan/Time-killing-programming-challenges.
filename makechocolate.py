@@ -1,14 +1,16 @@
 def permutations(amount, size, threshold):
-  "Given the amount and size, it stores all possible sums of the values in a list"
   if amount == 1:
-      return size #If there's only one chocolate bar
+      return size
   combinations = []
   for i in range(1, amount + 1):
     combinations.append(size * i)
   if combinations[-1] == threshold:
       return combinations[-1]
   elif combinations[-1] > threshold:
-      return combinations[-1] - threshold
+      if size == 1:
+        return combinations[-1] - threshold
+      elif size == 5:
+        return combinations[-2]
   else:
       return combinations
 
@@ -33,7 +35,7 @@ def make_chocolate(small_amount, big_amount, goal):
                 if type(small_sums_list) == list: # If the sum of small bars has not exceeded the threshold value
                     return -1
                 elif small_sum == new_threshold_value:
-                    return small_sum # Whichever value we choose will be correct (either small sum or new_threshold_value)
+                    return small_sum # Whichever value we choose will be correct
                 elif small_sum > new_threshold_value:
                     return new_threshold_value # It is the number of small bars we have left before our goal that matters
             elif small_sum == goal:
@@ -41,7 +43,7 @@ def make_chocolate(small_amount, big_amount, goal):
             elif small_sum > goal: # If the sum has exceeded our goal
                 return goal #Since the size is one, we can return goal as the result
         elif big_sum >= goal:
-            make_chocolate(small_amount, big_amount -1, goal) # We adjust the big_amount variable by - 1, to check for different combinations      
+            make_chocolate(small_amount, big_amount -1, goal) # We adjust the amounts by - 1, to check for different combinations
         elif big_sum == 5:
             new_threshold_value = goal - big_sum # We adjust the new threshold value for the permutations function
             small_sums_list = permutations(small_amount, small_size, new_threshold_value) #Get all possible sums with our given small values
@@ -53,4 +55,4 @@ def make_chocolate(small_amount, big_amount, goal):
             elif small_sum > new_threshold_value: # If the sum has exceeded our goal
                 return goal #Since the size is one, we can return goal as the result
 
-print(make_chocolate(5, 2, 15))
+
