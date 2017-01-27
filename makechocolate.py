@@ -28,8 +28,8 @@ def make_chocolate(small_amount, big_amount, goal):
         if type(big_sum) == list: #If none of the sums reached our goal
             new_threshold_value = goal - big_sums_list[-1] # We adjust the new threshold value for the permutations function
             small_sums_list = permutations(small_amount, small_size, goal) #Get all possible sums with our given small values
-            small_sum = small_sums_list # If the sum of our small values has indeed equaled or exceeded our goal
-            if type(small_sums_list) == list:  # If the sum of our small values has not equaled nor exceeded our goal
+            small_sum = small_sums_list # If the sum of our small values has indeed equalled or exceeded our goal
+            if type(small_sums_list) == list:  # If the sum of our small values has not equalled nor exceeded our goal
                 small_sums_list = permutations(small_amount, small_size, new_threshold_value)
                 small_sum = small_sums_list
                 if type(small_sums_list) == list: # If the sum of small bars has not exceeded the threshold value
@@ -39,7 +39,7 @@ def make_chocolate(small_amount, big_amount, goal):
                 elif small_sum > new_threshold_value:
                     return new_threshold_value # It is the number of small bars we have left before our goal that matters
             elif small_sum == goal:
-                return small_sum # If the sum has equaled our goal, it is indiferent whether we choose one or the other variable
+                return small_sum # If the sum has equalled our goal, it is indiferent whether we choose one or the other variable
             elif small_sum > goal: # If the sum has exceeded our goal
                 return goal #Since the size is one, we can return goal as the result
         elif big_sum >= goal:
@@ -47,11 +47,11 @@ def make_chocolate(small_amount, big_amount, goal):
         elif big_sum == 5:
             new_threshold_value = goal - big_sum # We adjust the new threshold value for the permutations function
             small_sums_list = permutations(small_amount, small_size, new_threshold_value) #Get all possible sums with our given small values
-            small_sum = small_sums_list # If the sum of our small values has indeed equaled or exceeded our goal
-            if type(small_sum) == list:  # If the sum of our small values has not equaled nor exceeded our goal
+            small_sum = small_sums_list # If the sum of our small values has indeed equalled or exceeded our goal
+            if type(small_sum) == list:  # If the sum of our small values has not equalled nor exceeded our goal
                 return small_sum
             elif small_sum == new_threshold_value:
-                return small_sum # If the sum has equaled our goal, it is indiferent whether we choose one or the other variable
+                return small_sum # If the sum has equalled our goal, it is indiferent whether we choose one or the other variable
             elif small_sum > new_threshold_value: # If the sum has exceeded our goal
                 return goal #Since the size is one, we can return goal as the result
 
