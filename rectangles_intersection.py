@@ -22,6 +22,7 @@ def vector(x1, y1, x2, y2):
 def areaCalculation(verticesA, verticesB, coordinatesInside):
     """Calculates area based on whether one, two or none coordinates are inside the rectangle"""
     """It will check for the four different positions rectangles can adopt"""
+    """For each one of the two possible scenarios i.e one vertex inside one-another vs two vertices"""
     if(len(coordinatesInside) == 1): #Rectangles have one vertex inside one-another
         if(coordinatesInside[0] == "Top left"): #If the coordinate in rectangle A inside B is at the top left
             vector = (verticesA[0], verticesA[1], verticesB[4], verticesB[5]) #Top left inside B necessarily implies that bottom right in B is inside A
