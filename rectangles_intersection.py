@@ -166,7 +166,7 @@ def vertexMatch(verticesA, verticesB):
     if(top_left and top_right and bottom_right and bottom_left):
         return "Total match"
     else:
-        return [top_left, top_right, bottom_right, bottom_left]
+        return [top_left, top_right, bottom_right, bottom_left] #Note: length will always be either zero or one or two if it's more we have a perfect match
 
 def verticalOrHorizontal(verticesA, verticesB):
     """Checks whether the relative position between both rectanles is vertical or horizontal"""
