@@ -42,6 +42,7 @@ def weightTimesHeight(x1, y1, x2, y2, x3, y3, verticesA, verticesB, vertical):
 def areaCalculation(verticesA, verticesB, coordinatesInside):
     """Calculates area based on whether one, two or none coordinates are inside the rectangle"""
     """It will check for the four different positions rectangles can adopt"""
+    """For each one of the two possible scenarios i.e one vertex inside one-another vs two vertices"""
     if(len(coordinatesInside) == 1): #Rectangles have one vertex inside one-another
         if(coordinatesInside[0] == "Top left"): #If the coordinate in rectangle A inside B is at the top left
             vector = (verticesA[0], verticesA[1], verticesB[4], verticesB[5]) #Top left inside B necessarily implies that bottom right in B is inside A
@@ -155,7 +156,7 @@ def vertexMatch(verticesA, verticesB):
             continue
 
     if(len(matchingVertices) >= 1): #These will all be shot in sequence accumulatively
-        top_left = True             #We are checking if a rectangle perfectly matches the other
+        top_left = True             #We are checking if one rectangle perfectly matches the other
     if(len(matchingVertices) >= 2):
         top_right = True
     if(len(matchingVertices) >= 3):
@@ -232,6 +233,11 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
                         return "Both rectangles share an edge at the bottom from vertex to vertex"
                     elif(verticesInEdge[0] == "Top left" and verticesInEdge[1] == "Bottom left"): #Edges overlap on the left side of rectangle B
                         return "Both rectangles share an edge on the left from vertex to vertex"
+<<<<<<< HEAD
 
 print(isLoveWhatWeFeelin(rectangleA, rectangleB))
 
+=======
+                    
+print(isLoveWhatWeFeelin(rectangleA, rectangleB))
+>>>>>>> 696483b28672fc6ed64821e2362fc9031f778a39
