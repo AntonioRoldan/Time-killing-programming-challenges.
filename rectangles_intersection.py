@@ -205,7 +205,10 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
     elif(BinA == "Totally inside"): #If rectangle B inside rectangle A
         return "Rectangle B is fully inside rectangle A\n Area of intersection : " + str(rectangleB.get('height') * rectangleB.get('weight'))
     elif(AinB == "No vertices inside one-another"): #We could use BinA too
-        return str(verticalOrHorizontal(verticesA, verticesB))
+        if(verticalOrHorizontal(verticesA, verticesB)):
+            return str(verticalOrHorizontal(verticesA, verticesB))
+        else:
+            return "Rectangles don't intersect"
     else:
         coordinatesInsideA = BinA
         coordinatesInsideB = AinB
@@ -218,9 +221,7 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
             return str(resultB)
         else: #Rectangles either do not touch or they share one vertex, or two vertices (a whole edge) or partially share an edge (and a vertex) with one rectangle facing outwards
             matchingVertices = vertexMatch(verticesA, verticesB)
-            if(len(matchingVertices) == 0): #If no vertices are matching rectangles don't match
-                print("Rectangles don't intersect")
-            elif(len(matchingVertices) == 1): #Either their edges match partially or the rectangles only share one vertex
+            if(len(matchingVertices) == 1): #Either their edges match partially or the rectangles only share one vertex
                 verticesInEdge = edgeMatch(coordinatesInside, verticesA, verticesB)
                 if(len(verticesInEdge) == 1): #If rectangles partially share an edge and a vertex
                     return "Both rectangles partially share an edge" #We could find where the edge overlap happens too but will stick to the problem requirements
