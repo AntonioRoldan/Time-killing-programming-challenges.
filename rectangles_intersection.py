@@ -163,7 +163,7 @@ def vertexMatch(verticesA, verticesB):
             continue
 
     if(len(matchingVertices) >= 1): #These will all be shot in sequence accumulatively
-        top_left = True             #We are checking if a rectangle perfectly matches the other
+        top_left = True             #We are checking if one rectangle perfectly matches the other
     if(len(matchingVertices) >= 2):
         top_right = True
     if(len(matchingVertices) >= 3):
