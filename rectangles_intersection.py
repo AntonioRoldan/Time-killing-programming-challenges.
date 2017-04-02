@@ -240,3 +240,5 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
                         return "Both rectangles share an edge at the bottom from vertex to vertex"
                     elif(verticesInEdge[0] == "Top left" and verticesInEdge[1] == "Bottom left"): #Edges overlap on the left side of rectangle B
                         return "Both rectangles share an edge on the left from vertex to vertex"
+                    
+print(isLoveWhatWeFeelin(rectangleA, rectangleB))
