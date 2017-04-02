@@ -1,4 +1,3 @@
-
 from math import sqrt
 
 x1 = 4
@@ -18,6 +17,27 @@ def vector(x1, y1, x2, y2):
     vector_y = y2 - y1
     return [vector_x, vector_y]
 
+def weightTimesHeight(x1, y1, x2, y2, x3, y3, verticesA, verticesB, vertical):
+    if(vertical):
+        x_intersection_bottom_left = verticesA[x1] #First we find the coordinates that make the base of our rectangle intersection
+        y_intersection_bottom_left = verticesB[y1]
+        x_intersection_bottom_right = verticesA[x2]
+        y_intersection_bottom_right = verticesB[y2]
+        vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, x_intersection_bottom_right, y_intersection_bottom_right) #We find vector that defines weight
+        intersection_weight = sqrt(vector[0]**2 + vector[1]**2) #and its length
+        vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, verticesA[x3], verticesA[y3]) #Same for the height
+        intersection_height = sqrt(vector[0]**2 + vector[1]**2)
+        return intersection_height*intersection_weight
+    elif(not vertical):
+        x_intersection_bottom_left = verticesB[x1]
+        y_intersection_bottom_left = verticesA[y1]
+        x_intersection_bottom_right = verticesB[x2]
+        y_intersection_bottom_right = verticesA[y2]
+        vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, x_intersection_bottom_right, y_intersection_bottom_right)
+        intersection_weight = sqrt(vector[0]**2 + vector[1]**2)
+        vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, verticesA[x3], verticesA[y3])
+        intersection_height = sqrt(vector[0]**2 + vector[1]**2)
+        return intersection_height*intersection_weight
 
 def areaCalculation(verticesA, verticesB, coordinatesInside):
     """Calculates area based on whether one, two or none coordinates are inside the rectangle"""
@@ -37,45 +57,13 @@ def areaCalculation(verticesA, verticesB, coordinatesInside):
             return "Area: " + vector[0] * vector[1] #Having the vector we multiply its components to get the answer
     elif(len(coordinatesInside) == 2): #Rectangle A has two vertices in rectangle B
         if(coordinatesInside[0] == "Top left" and coordinatesInside[1] == "Top right"): #We want to find the intersection point at the edge from position one
-            x_intersection_bottom_left = verticesA[2] #The x coordinate will be equal to the top right x coordinate in rectangle A
-            y_intersection_bottom_left = verticesB[5] #The y coordinate will be equal to the bottom left or bottom right y coordinate in rectangle B
-            x_intersection_bottom_right = verticesA[0] #The x coordinate will be equal to the top left x coordinate in rectangle A
-            y_intersection_bottom_right = verticesB[7] #The y coordinate will be equal to the bottom right or bottom left y coordinate in rectangle B
-            vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, x_intersection_bottom_right, y_intersection_bottom_right) #Vector of bottom left and right coordinates
-            intersection_weight = sqrt(vector[0]**2 + vector[1]**2) #We find its length, equivalent to the weight of our intersection
-            vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, verticesA[0], verticesA[1])
-            intersection_height = sqrt(vector[0]**2 + vector[1]**2)
-            return intersection_height * intersection_height
+            return weightTimesHeight(2, 5, 0, 7, 0, 1, verticesA, verticesB, True)
         elif(coordinatesInside[0] == "Top right" and coordinatesInside[1] == "Bottom right"): #We want to find the intersection point at the edge from position two
-            x_intersection_bottom_left = verticesB[0] #The x coordinate will be equal to the top left x coordinate in rectangle B
-            y_intersection_bottom_left = verticesA[3] #The y coordinate will be equal to the top right y coordinate in rectangle A
-            x_intersection_bottom_right = verticesB[6] #The x coordinate will be equal to the bottom left x coordinate in rectangle B
-            y_intersection_bottom_right = verticesA[5] #The y coordinate will be equal to the bottom left y coordinate in rectangle B
-            vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, x_intersection_bottom_right, y_intersection_bottom_right) #Vector of bottom left and right coordinates
-            intersection_weight = sqrt(vector[0]**2 + vector[1]**2) #We find its length, equivalent to the weight of our intersection
-            vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, verticesA[2], verticesA[3]) #Vector of bottom left and top left coordinates
-            intersection_height = sqrt(vector[0]**2 + vector[1]**2) #We find its length equivalent to the height of our intersection
-            return intersection_height * intersection_height #We return the area
+            return weightTimesHeight(0, 3, 6, 5, 2, 3, verticesA, verticesB, False)
         elif(coordinatesInside[0] == "Bottom right" and coordinatesInside[1] == "Bottom left"): #We want to find the intersection point at teh edge from poisition 3
-            x_intersection_bottom_right = verticesA[6] #The x coordinate will be equal to the bottom left x coordinate in rectangle A
-            y_intersection_bottom_right = verticesB[1] #The y coordinate will be equal to the top left y coordinate in rectangle B
-            x_intersection_bottom_left = verticesA[4] #The x coordinate will be equal to the bottom right x coordinate in rectangle A
-            y_intersection_bottom_left = verticesB[3] #The y coordinate will be equal to the top right y coordinate in rectangle B
-            vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, x_intersection_bottom_right, y_intersection_bottom_right) #Vector of bottom left and right coordinates
-            intersection_weight = sqrt(vector[0]**2 + vector[1]**2) #We find its length, equivalent to the weight of our intersection
-            vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, verticesA[0], vertices[1]) #Vector of bottom left and top right coordinates
-            intersection_height = sqrt(vector[0]**2 + vector[1]**2) #We find its length, equivalent to the height of our intersection
-            return intersection_height * intersection_height #We return the area
+            return weightTimesHeight(4, 3, 6, 1, 4, 5, verticesA, verticesB, True)
         elif(coordinatesInside[0] == "Top left" and coordinatesInside[1] == "Bottom left"): #Order is inverted because of the order of statements in verticesInsideRectangle
-            x_intersection_bottom_left = verticesB[6] #The x coordinate will be equal to the bottom left x coordinate in rectangle B
-            y_intersection_bottom_left = verticesA[7] #The y coordinate will be equal to the bottom lef y coordinate in rectangle A
-            x_intersection_bottom_right = verticesB[2] #The x coordinate will be equal to the top right x coordinate in rectangle B
-            y_intersection_bottom_right = verticesA[1] #The y coordinate will be equal to the top left y coordinate in rectangle A
-            vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, x_intersection_bottom_right, y_intersection_bottom_right) #Vector of bottom left and riht coordinates
-            intersection_weight = sqrt(vector[0]**2 + vector[1]**2) #We find its length, equivalent to the weight of our intersection
-            vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, verticesA[6], vertices[7]) #Vector of bottom left rectangle A and bottom left in rectangle B coordinates
-            intersection_height = sqrt(vector[0]**2 + vector[1]**2) #We find its length equivalent to the height of our intersection
-            return intersection_height * intersection_height #We return the area
+            return weightTimesHeight(6, 7, 2, 1, 6, 7, verticesA, verticesB, False)
         else:
             return False
 
@@ -143,7 +131,7 @@ def findVertices(rectangle):
     vertices.append(x_bottom_right)
     vertices.append(y_bottom_right)
     vertices.append(x_bottom_left)
-    vertices.apppend(y_bottom_left)
+    vertices.append(y_bottom_left)
     return vertices
 
 
@@ -151,6 +139,10 @@ def vertexMatch(verticesA, verticesB):
     counter = 0
     contiguous = False
     matchingVertices = []
+    top_left = False
+    top_right = False
+    bottom_right = False
+    bottom_left = False
     for i in range(8):
         if verticesA[i] == verticesB[i] and contiguous:
             matchingVertices.append(verticesA.index(verticesA[i])) #Y coordinate index, will help the computer know what vertex is matching
@@ -203,7 +195,7 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
     """It will check for every single possiblity for two rectangles to intersect"""
     verticesA = findVertices(rectangleA) #First we find all vertices for each rectangle
     verticesB = findVertices(rectangleB)
-    if(vertexMatch(VerticesA, VerticesB) == "Total match"):
+    if(vertexMatch(verticesA, verticesB) == "Total match"):
         return str(rectangleA.get('height') * rectangleA.get('weight')) #If both rectangles share all of their vertices
     AinB = verticesInsideRectangle(verticesA, verticesB)
     BinA = verticesInsideRectangle(verticesB, verticesA)
@@ -240,3 +232,6 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
                         return "Both rectangles share an edge at the bottom from vertex to vertex"
                     elif(verticesInEdge[0] == "Top left" and verticesInEdge[1] == "Bottom left"): #Edges overlap on the left side of rectangle B
                         return "Both rectangles share an edge on the left from vertex to vertex"
+
+print(isLoveWhatWeFeelin(rectangleA, rectangleB))
+
