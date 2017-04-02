@@ -72,21 +72,21 @@ def edgeMatch(coordinatesInside, verticesA, verticesB):
     """Finds possible edge intersections between rectangles"""
     coordinatesEdge = []
     if(len(coordinatesInside) > 0):
-        if(verticesA[0] == verticesB[0]): #We check for x coordinate 
-            if(verticesA[1] <= verticesB[1] and verticesA[1] >= verticesB[7]): #We check for y coordinate 
+        if(verticesA[0] == verticesB[0]): #We check for x coordinate
+            if(verticesA[1] <= verticesB[1] and verticesA[1] >= verticesB[7]): #We check for y coordinate
                 coordinatesEdge.append("Top left") #Top left coordinate is touching the edge
             else:
                 pass
-        if(verticesA[2] == verticesB[2]): #We check for x coordinate 
-            if(verticesA[3] < verticesB[3] and verticesA[3] > verticesB[5]): #We check for y coordinate 
+        if(verticesA[2] == verticesB[2]): #We check for x coordinate
+            if(verticesA[3] < verticesB[3] and verticesA[3] > verticesB[5]): #We check for y coordinate
                 coordinatesEdge.append("Top right") #Top right coordinate touching the edge
             else:
                 pass
-        if(verticesA[4] == verticesB[4]): #We check for x coordinate 
-            if(verticesA[5] > verticesB[5] and verticesA[5] < verticesB[3]): #We check for y coordinate 
+        if(verticesA[4] == verticesB[4]): #We check for x coordinate
+            if(verticesA[5] > verticesB[5] and verticesA[5] < verticesB[3]): #We check for y coordinate
                 coordinatesEdge.append("Bottom right") #Bottom right coordinate touching the edge
-        if(verticesA[6] == verticesB[6]): #We check for x coordinate 
-            if(verticesA[7] > verticesB[7] and verticesA[7] < verticesB[1]): #We check for y coordinate 
+        if(verticesA[6] == verticesB[6]): #We check for x coordinate
+            if(verticesA[7] > verticesB[7] and verticesA[7] < verticesB[1]): #We check for y coordinate
                 coordinatesEdge.append("Bottom left") #Bottom left coordinate touching the edge
             else:
                 pass
@@ -201,9 +201,9 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
     AinB = verticesInsideRectangle(verticesA, verticesB)
     BinA = verticesInsideRectangle(verticesB, verticesA)
     if(AinB == "Totally inside"): #If rectangle A inside rectangle B
-        return "Rectangle A is inside rectangle B\nArea of intersection: " + str(rectangleA.get('height') * rectangleA.get('weight'))
+        return "Rectangle A is fully inside rectangle B\nArea of intersection: " + str(rectangleA.get('height') * rectangleA.get('weight'))
     elif(BinA == "Totally inside"): #If rectangle B inside rectangle A
-        return "Rectangle B is inside rectangle A\n Area of intersection : " + str(rectangleB.get('height') * rectangleB.get('weight'))
+        return "Rectangle B is fully inside rectangle A\n Area of intersection : " + str(rectangleB.get('height') * rectangleB.get('weight'))
     elif(AinB == "No vertices inside one-another"): #We could use BinA too
         return str(verticalOrHorizontal(verticesA, verticesB))
     else:
@@ -238,5 +238,4 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
                     return "Both rectangles share an edge on the left from vertex to vertex"
 
 print(isLoveWhatWeFeelin(rectangleA, rectangleB))
-
 
