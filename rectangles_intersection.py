@@ -224,15 +224,18 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
                 verticesInEdge = edgeMatch(coordinatesInside, verticesA, verticesB)
                 if(len(verticesInEdge) == 1): #If rectangles partially share an edge and a vertex
                     return "Both rectangles partially share an edge" #We could find where the edge overlap happens too but will stick to the problem requirements
-                elif(len(verticesInEdge) == 2):
-                    if(verticesInEdge[0] == "Top left" and verticesInEdge[1] == "Top right"): #Edges overlap at the top of rectangle B
-                        return "Both rectangles share an edge at the top from vertex to vertex"
-                    elif(verticesInEdge[0] == "Top right" and verticesInEdge[1] == "Bottom right"): #Edges overlap at the top of rectangle B
-                        return "Both rectangles share an edge on the right from vertex to vertex"
-                    elif(verticesInEdge[0] == "Bottom left" and verticesInEdge[1] == "Bottom right"): #Edges overlap at the bottom of rectangle B
-                        return "Both rectangles share an edge at the bottom from vertex to vertex"
-                    elif(verticesInEdge[0] == "Top left" and verticesInEdge[1] == "Bottom left"): #Edges overlap on the left side of rectangle B
-                        return "Both rectangles share an edge on the left from vertex to vertex"
+                else:
+                    return "They share one vertex but are opposite to each other"
+            elif(len(matchingVertices) == 2):
+                verticesInEdge = edgeMatch(coordinatesInside, verticesA, verticesB)
+                if(verticesInEdge[0] == "Top left" and verticesInEdge[1] == "Top right"): #Edges overlap at the top of rectangle B
+                    return "Both rectangles share an edge at the top from vertex to vertex"
+                elif(verticesInEdge[0] == "Top right" and verticesInEdge[1] == "Bottom right"): #Edges overlap at the top of rectangle B
+                    return "Both rectangles share an edge on the right from vertex to vertex"
+                elif(verticesInEdge[0] == "Bottom left" and verticesInEdge[1] == "Bottom right"): #Edges overlap at the bottom of rectangle B
+                    return "Both rectangles share an edge at the bottom from vertex to vertex"
+                elif(verticesInEdge[0] == "Top left" and verticesInEdge[1] == "Bottom left"): #Edges overlap on the left side of rectangle B
+                    return "Both rectangles share an edge on the left from vertex to vertex"
 
 print(isLoveWhatWeFeelin(rectangleA, rectangleB))
 
