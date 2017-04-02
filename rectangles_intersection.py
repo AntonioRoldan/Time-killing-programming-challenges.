@@ -1,17 +1,17 @@
 from math import sqrt
 
 x1 = 4
-y1 = 6
-x2 = 7
-y2 = 2
-heightA = 14
-heightB = 3
+y1 = 2
+x2 = 1
+y2 = 6
+heightA = 40
+heightB = 37
 weightA = 8
 weightB = 20
 rectangleA = {'x_coordinate':x1, 'y_coordinate':y1, 'height':heightA, 'weight':weightA}
 rectangleB = {'x_coordinate':x2, 'y_coordinate':y2, 'height':heightB, 'weight':weightB}
 
-def vector(x1, y1, x2, y2):
+def findVector(x1, y1, x2, y2):
     """Calculates the main vector of a straight line given two points"""
     vector_x = x2 - x1
     vector_y = y2 - y1
@@ -33,11 +33,15 @@ def weightTimesHeight(x1, y1, x2, y2, x3, y3, verticesA, verticesB, vertical):
         y_intersection_bottom_left = verticesA[y1]
         x_intersection_bottom_right = verticesB[x2]
         y_intersection_bottom_right = verticesA[y2]
-        vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, x_intersection_bottom_right, y_intersection_bottom_right)
+        vector = findVector(x_intersection_bottom_left, y_intersection_bottom_left, x_intersection_bottom_right, y_intersection_bottom_right)
         intersection_weight = sqrt(vector[0]**2 + vector[1]**2)
-        vector = vector(x_intersection_bottom_left, y_intersection_bottom_left, verticesA[x3], verticesA[y3])
+        vector = findVector(x_intersection_bottom_left, y_intersection_bottom_left, verticesA[x3], verticesA[y3])
         intersection_height = sqrt(vector[0]**2 + vector[1]**2)
         return intersection_height*intersection_weight
+
+def singleVertexArea(x1, y1, x2, y2, verticesA, verticesB):
+    vector = findVector(verticesA[x1], verticesA[y1], verticesB[x2], verticesB[y2]) #Top left inside B necessarily implies that bottom right in B is inside A
+    return "Area: " + str(vector[0] * vector[1]) #Having the vector we multiply its components to get the answer
 
 def areaCalculation(verticesA, verticesB, coordinatesInside):
     """Calculates area based on whether one, two or none coordinates are inside the rectangle"""
@@ -45,17 +49,17 @@ def areaCalculation(verticesA, verticesB, coordinatesInside):
     """For each one of the two possible scenarios i.e one vertex inside one-another vs two vertices"""
     if(len(coordinatesInside) == 1): #Rectangles have one vertex inside one-another
         if(coordinatesInside[0] == "Top left"): #If the coordinate in rectangle A inside B is at the top left
-            vector = (verticesA[0], verticesA[1], verticesB[4], verticesB[5]) #Top left inside B necessarily implies that bottom right in B is inside A
-            return "Area: " + vector[0] * vector[1] #Having the vector we multiply its components to get the answer
+            print("Top left coordinate in rectangle A inside B")
+            return singleVertexArea(0, 1, 4, 5, verticesA, verticesB)
         elif(coordinatesInside[0] == "Top right"): #If the coordinate in rectangle A inside B is at the top right
-            vector = vector(verticesA[2], verticesA[3], verticesB[6], verticesB[7]) #Top right inside B necessarily implies that bottom left in B is inside A
-            return "Area: " + vector[0] * vector[1] #Having the vector we multiply its components to get the answer
+            print("Top right coordinate in rectangle A inside B")
+            return singleVertexArea(2, 3, 6, 7, verticesA, verticesB)
         elif(coordinatesInside[0] == "Bottom right"): #If the coordinate in rectangle A inside B is at the bottom right
-            vector = vector(verticesA[4], verticesA[5], verticesB[0], verticesB[1]) #Bottom right inside B necessarily implies that top left in B is inside A
-            return "Area: " + vector[0] * vector[1] #Having the vector we multiply its components to get the answer
+            print("Bottom right coordinate in rectangle A inside B")
+            return singleVertexArea(4, 5, 0, 1, verticesA, verticesB)
         elif(coordinatesInside[0] == "Bottom left"): #If the coordinate in rectangle A inside B is at the bottom left
-            vector = (verticesA[6], verticesA[7], verticesB[2], verticesB[3]) #Bottom left inside B necessarily implies that top right in B is inside A
-            return "Area: " + vector[0] * vector[1] #Having the vector we multiply its components to get the answer
+            print("Bottom left coordinate in rectangle A inside B")
+            return singleVertexArea(6, 7, 2, 3, verticesA, verticesB)
     elif(len(coordinatesInside) == 2): #Rectangle A has two vertices in rectangle B
         if(coordinatesInside[0] == "Top left" and coordinatesInside[1] == "Top right"): #We want to find the intersection point at the edge from position one
             return weightTimesHeight(2, 5, 0, 7, 0, 1, verticesA, verticesB, True)
@@ -106,9 +110,9 @@ def verticesInsideRectangle(verticesA, verticesB):
         coordinatesInside.append("Bottom right") #Bottom right inside rectangle
     if(verticesA[6] >= verticesB[6] and verticesA[6] <= verticesB[2] and verticesA[7] >= verticesB[7] and verticesA[7] <= verticesB[1]): #Bottom left
         coordinatesInside.append("Bottom left") #Bottom left inside rectangle
-    if(all(coordinatesInside)):
+    if(len(coordinatesInside) == 4):
         return "Totally inside"
-    elif( not coordinatesInside):
+    elif(not coordinatesInside):
         return "No vertices inside one another"
     else:
         return coordinatesInside
@@ -212,7 +216,6 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
     else:
         coordinatesInsideA = BinA
         coordinatesInsideB = AinB
-        coordinatesEdge(coordinatesInsideB, verticesA, verticesB)
         resultA = areaCalculation(verticesA, verticesB, coordinatesInsideB) #Assuming rectangle A is inside B
         resultB = areaCalculation(verticesA, verticesB, coordinatesInsideA) #Asssuming rectangle B is inside A
         if(resultA): #If A is partially inside B or both rectangles have a single vertex inside one another
@@ -237,6 +240,7 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
                     return "Both rectangles share an edge at the bottom from vertex to vertex"
                 elif(verticesInEdge[0] == "Top left" and verticesInEdge[1] == "Bottom left"): #Edges overlap on the left side of rectangle B
                     return "Both rectangles share an edge on the left from vertex to vertex"
-
+            elif(len(matchingVertices) == 4):
+                return "Perfect match\nArea of intersection: " + str(rectangleA.get('height') * rectangleA.get('weight'))
 print(isLoveWhatWeFeelin(rectangleA, rectangleB))
 
