@@ -1,13 +1,13 @@
 from math import sqrt
 
-x1 = 4
-y1 = 2
-x2 = 1
-y2 = 6
-heightA = 40
-heightB = 37
-weightA = 8
-weightB = 20
+x1 = 2
+y1 = 7
+x2 = 10
+y2 = 89
+heightA = 12
+heightB = 39
+weightA = 7
+weightB = 10
 rectangleA = {'x_coordinate':x1, 'y_coordinate':y1, 'height':heightA, 'weight':weightA}
 rectangleB = {'x_coordinate':x2, 'y_coordinate':y2, 'height':heightB, 'weight':weightB}
 
@@ -120,23 +120,21 @@ def verticesInsideRectangle(verticesA, verticesB):
 def findVertices(rectangle):
     vertices = []
     x_top_left = rectangle.get('x_coordinate') #First we define the top left coordinates
-    y_top_left = rectangle.get('y:coordinates')
-    mid_point_weight = rectangle.get('weight') // 2 + rectangle.get('x_coordinate')
-    mid_point_height = rectangle.get('height') // 2 + rectangle.get('y_coordinate')
+    y_top_left = rectangle.get('y_coordinate')
     x_top_right = rectangle.get('x_coordinate') + rectangle.get('weight') #Next top right coordinates
     y_top_right = rectangle.get('y_coordinate')
-    x_bottom_right = x_top_right #Next bottom right coordinates
-    y_bottom_right =  y_top_right - rectangle.get('height')
+    x_bottom_right = rectangle.get('x_coordinate') + rectangle.get('weight') #Next bottom right coordinates
+    y_bottom_right =  rectangle.get('y_coordinate') - rectangle.get('height')
     x_bottom_left = rectangle.get('x_coordinate') #Finally bottom left coordinates
     y_bottom_left = rectangle.get('y_coordinate') - rectangle.get('height')
     vertices.append(x_top_left) #We append to a list, mentally it is like drawing a rectangle clockwise and starting at the top left vertex
     vertices.append(y_top_left) #Thus location of coordinates is easily remembered
     vertices.append(x_top_right)
     vertices.append(y_top_right)
-    vertices.append(x_bottom_right)
-    vertices.append(y_bottom_right)
     vertices.append(x_bottom_left)
     vertices.append(y_bottom_left)
+    vertices.append(x_bottom_right)
+    vertices.append(y_bottom_right)
     return vertices
 
 
@@ -218,6 +216,10 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
         coordinatesInsideB = AinB
         resultA = areaCalculation(verticesA, verticesB, coordinatesInsideB) #Assuming rectangle A is inside B
         resultB = areaCalculation(verticesA, verticesB, coordinatesInsideA) #Asssuming rectangle B is inside A
+        for vertex in verticesA:
+            print(vertex)
+        for vertex in verticesB:
+            print(vertex)
         if(resultA): #If A is partially inside B or both rectangles have a single vertex inside one another
             return str(resultA)
         elif(resultB): #If B is partially inside A, in case both rectangles have a vertex inside one another it is irrelevant whether we choose A or B
