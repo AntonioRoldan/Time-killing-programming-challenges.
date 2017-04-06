@@ -2,11 +2,11 @@ from math import sqrt
 
 x1 = 2
 y1 = 7
-x2 = 10
-y2 = 89
-heightA = 12
-heightB = 39
-weightA = 7
+x2 = 2
+y2 = 7
+heightA = 5
+heightB = 10
+weightA = 5
 weightB = 10
 rectangleA = {'x_coordinate':x1, 'y_coordinate':y1, 'height':heightA, 'weight':weightA}
 rectangleB = {'x_coordinate':x2, 'y_coordinate':y2, 'height':heightB, 'weight':weightB}
@@ -216,10 +216,6 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
         coordinatesInsideB = AinB
         resultA = areaCalculation(verticesA, verticesB, coordinatesInsideB) #Assuming rectangle A is inside B
         resultB = areaCalculation(verticesA, verticesB, coordinatesInsideA) #Asssuming rectangle B is inside A
-        for vertex in verticesA:
-            print(vertex)
-        for vertex in verticesB:
-            print(vertex)
         if(resultA): #If A is partially inside B or both rectangles have a single vertex inside one another
             return str(resultA)
         elif(resultB): #If B is partially inside A, in case both rectangles have a vertex inside one another it is irrelevant whether we choose A or B
@@ -242,7 +238,9 @@ def isLoveWhatWeFeelin(rectangleA, rectangleB):
                     return "Both rectangles share an edge at the bottom from vertex to vertex"
                 elif(verticesInEdge[0] == "Top left" and verticesInEdge[1] == "Bottom left"): #Edges overlap on the left side of rectangle B
                     return "Both rectangles share an edge on the left from vertex to vertex"
-            elif(len(matchingVertices) == 4):
+            elif(all(matchingVertices)):
+                print(matchingVertices)
                 return "Perfect match\nArea of intersection: " + str(rectangleA.get('height') * rectangleA.get('weight'))
+            else:
+                return "Rectangles don't intersect"
 print(isLoveWhatWeFeelin(rectangleA, rectangleB))
-
