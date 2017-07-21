@@ -9,7 +9,6 @@ def make_bricks(small, big, goal):
      if formula > goal:
        if big_size % adjustment_value == 0 or small_size % adjustment_value == 0:
          return True
-       else:
-         if adjustment_value % big_size == 0 or adjustment_value % small_size == 0:
-           return True
+       else if adjustment_value % big_size == 0 or adjustment_value % small_size == 0:
+         return True
  return False 
